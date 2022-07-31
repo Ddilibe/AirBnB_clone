@@ -9,11 +9,11 @@
 ## Description Of The Command Interpreter
 
 
-- ** How to Start It **
+- **How to Start It**
 
 
 
-- ** How to Use It **
+- **How to Use It**
 
 
-- ** Examples **
+- **Examples**
