@@ -2,6 +2,7 @@
 """
     The module containing the base model of the AirBnB Project
 """
+from models import storage
 from datetime import datetime
 import uuid
 
@@ -20,6 +21,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
         else:
             for key, value in kwargs.items():
                 form = "%Y-%m-%dT%H:%M:%S.%f"
@@ -37,6 +39,7 @@ class BaseModel:
     def save(self):
         """ Public Instance method for updating instance saved parameters """
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """ Public Instance Method that returns a dictionary containing all

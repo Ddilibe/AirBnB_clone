@@ -22,18 +22,19 @@ class FileStorage:
 
     def new(self, obj):
         """ Public Instance Method that adds the atribute to the dictionary """
-        name = str(obj.__class__.__name__) + '.' + str(obj.id)
-        FileStorage.__objects[name] = obj
+        name = str(obj.__class__) + '.' + str(obj.id)
+        self.__objects[name] = obj
 
     def save(self):
         """
-        Public Instance Method that serializes __objects to the JSON path
+        Public Instance Method thet serializes __objects to thhe JSON path
         """
-        new_dictionary = {}
-        for keys, value in FileStorage.__objects.items():
-            new_dictionary[keys] = value.to_dict()
-        with open(FileStorage.__file_path, 'w') as w:
-            json.dump(new_dictionary, w)
+        try:
+            open(self.__file_path, 'r')
+        except Exception:
+            open(self.__file_path, 'w')
+        with open(self.__file_path, 'a') as w:
+            json.dumps(self.__objects, w)
 
     def reload(self):
         """
@@ -41,7 +42,6 @@ class FileStorage:
         """
         try:
             with open(self.__file_path, 'r') as done:
-                dictionary = json.load(done)
-                self.new(dictionary)
+                dictionary = json.loads(done)
         except Exception:
             pass
