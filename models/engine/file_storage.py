@@ -40,11 +40,17 @@ class FileStorage:
         Public Instance to deserialize the JSON FILE to __object
         """
         from models.base_model import BaseModel
+        from models.user import User
 
+        major_class = {
+                "User":User,
+                "BaseModel":BaseModel
+                }
         try:
             with open(self.__file_path, 'r') as done:
                 dictionary = json.load(done)
                 for keys, value in dictionary.items():
-                    self.new(BaseModel(value))
+                    semi_key = str(keys).split('.')[0]
+                    self.new(major_class[semi_key](**value))
         except Exception:
             pass
