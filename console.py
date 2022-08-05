@@ -5,12 +5,17 @@
 import cmd
 import sys
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
+    major_class = {
+            "BaseModel":BaseModel,
+            "User":User
+            }
 
     def emptyline(self):
         """
@@ -32,12 +37,12 @@ class HBNBCommand(cmd.Cmd):
         if args[0] == "":
             print("** class name missing **")
         else:
-            if args[0] != "BaseModel":
-                print("** class doesn't exist **")
-            else:
-                new_model = BaseModel()
+            if args[0] in self.major_class:
+                new_model = self.major_class[args[0]]()
                 print(new_model.id)
                 new_model.save()
+            else:
+                print("** class doesn't exist **")
 
     def do_show(self, args):
         """Show command for printing the string representation of an \
@@ -46,7 +51,7 @@ instance based in the class name and id\n"""
             print("** class name missing **")
             return
         args = args.split(" ")
-        if args[0] != "BaseModel":
+        if args[0] not in self.major_class:
             print("** class doesn't exit **")
         else:
             if len(args) == 1:
@@ -54,10 +59,12 @@ instance based in the class name and id\n"""
                 return
             new_storage = storage.all()
             for key in new_storage.keys():
-                new_base = new_storage[key]
-                if args[1] == new_base.id:
-                    print(new_storage[key])
-                    return
+                new_key = key.split(".")[0]
+                if new_key == args[0]:
+                    new_base = new_storage[key]
+                    if args[1] == new_base.id:
+                        print(new_storage[key])
+                        return
             print("** no instance found **")
 
     def do_destroy(self, args):
@@ -118,17 +125,15 @@ adding or updating attribute\n"""
             new_storage = storage.all()
             check = list(args[3])
             try:
-                if '"' or '\'' in check:
-                    for i in check:
-                        if i in ('"', '"'):
-                            check.remove(i)
-                            args[3] = "".join(check)
-                elif '.' in check:
+                if '.' in check:
                     args[3] = float(args[3])
                 else:
                     args[3] = int(arg[3])
             except:
-                a
+                for i in check:
+                    if i in ('"', "'"):
+                        check.remove(i)
+                        args[3] = "".join(check)
             for key in new_storage.keys():
                 new_base = new_storage[key]
                 if args[1] == new_base.id:
