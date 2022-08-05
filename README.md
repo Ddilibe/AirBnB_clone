@@ -12,7 +12,8 @@ The data contained in the file is deserialized when the program is launch and se
 
 ## Description Of The Command Interpreter
 The command interperter is an interactive shell used to manage the objects of the AirBnB project. It implements the basics of the python cmd library
-With the command interpreter,
+With the command interpreter, the following can be done:
+
 	1. New objects can be created
 	2. Existing objects can be retrieved frm the database
 	3. Different operation can also be computed in the interperter
@@ -21,8 +22,7 @@ With the command interpreter,
 
 - **How to Start It**
 The command interpreter is started by runing the console.py file
-
-	python console.py
+	<br/> `python console.py`
 
 
 - **How to Use It**
