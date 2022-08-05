@@ -19,7 +19,7 @@ With the command interpreter, the following can be done:<br/>
 4. Attributes of an existing object can also be updated
 5. And an existing object can also be deleted from the database
 
-- **How to Start It**
+### - **How to Start It**
 
 The command interpreter is started by runing the console.py file
 
@@ -32,7 +32,7 @@ The interactive command interpreter can be able to take in five different comman
 
 - _Create_: This command is used to create a new model class instance in the database. It returns the ID of the created instance. It takes in one argument.
 
-	(hbnb) create BaseModel
+		(hbnb) create BaseModel
 
 
-- **Examples**
+### - **Examples**
