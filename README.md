@@ -23,15 +23,15 @@ With the command interpreter, the following can be done:<br/>
 
 1. First of all, clone the repository
 
-	git clone https://github.com/Ddilibe/AirBnB_clone.git
+		git clone https://github.com/Ddilibe/AirBnB_clone.git
 
 2. Enter the directory containing the details of the repository
 
-	cd AirBnB_clone
+		cd AirBnB_clone
 
 3. Run the console file
 
-	python console.py
+		python console.py
 
 
 ### - **How to Use It**
@@ -58,7 +58,7 @@ The interactive command interpreter can be able to take in five different comman
 
 		(hbnb) update <class_name> <instance_id> <attribute_name> <attribute_value>
 
-**Note**: If the commands with the mandatory commands are not supplied with the mandatory command, an error will arise.
+**Note**: If the commands with the mandatory arguments are not supplied with the mandatory arguments, an error will arise.
 
 
 ### - **Examples**
