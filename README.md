@@ -26,11 +26,13 @@ The command interpreter is started by runing the console.py file
 	python console.py
 
 
-- **How to Use It**
+### - **How to Use It**
 
 The interactive command interpreter can be able to take in five different commans which are
 
-	- _Create_: This command is used to create a new model class instance in the database. It returns the ID of the created instance. It takes in one argument. <br/> `(hbnb) create BaseModel`<br/>
+- _Create_: This command is used to create a new model class instance in the database. It returns the ID of the created instance. It takes in one argument.
+
+	(hbnb) create BaseModel
 
 
 - **Examples**
