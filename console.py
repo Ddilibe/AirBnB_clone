@@ -6,6 +6,11 @@ import cmd
 import sys
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from models import storage
 
 
@@ -14,7 +19,12 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     major_class = {
             "BaseModel":BaseModel,
-            "User":User
+            "User":User,
+            "Place":Place,
+            "State":State,
+            "City":City,
+            "Amenity":Amenity,
+            "Review":Review
             }
 
     def emptyline(self):
@@ -74,7 +84,7 @@ based on the class name and id\n"""
             print("** class name missing **")
             return
         args = args.split(" ")
-        if args[0] != "BaseModel":
+        if args[0] not in self.major_class:
             print("** class doesn't exit **")
         else:
             if len(args) == 1:
@@ -82,11 +92,13 @@ based on the class name and id\n"""
                 return
             new_storage = storage.all()
             for key in new_storage.keys():
-                new_base = new_storage[key]
-                if args[1] == new_base.id:
-                    del storage.all()[key]
-                    storage.save()
-                    return
+                new_key = key.split(".")[0]
+                if new_key == args[0]:
+                    new_base = new_storage[key]
+                    if args[1] == new_base.id:
+                        del storage.all()[key]
+                        storage.save()
+                        return
             print("** no instance found **")
 
     def do_all(self, args):
@@ -95,9 +107,11 @@ based or not on the class name \n"""
         args = args.split(" ")
         new_storage, new_thing = storage.all(), []
         if len(args) > 0 and args[0] != "":
-            if args[0] == "BaseModel":
+            if args[0] in self.major_class:
                 for key in new_storage.keys():
-                    new_thing.append(new_storage[key].__str__())
+                    new_key = key.split(".")[0]
+                    if new_key == args[0]:
+                        new_thing.append(new_storage[key].__str__())
             else:
                 print("** class doesn't exist **")
                 return
@@ -113,7 +127,7 @@ adding or updating attribute\n"""
             print("** class name missing **")
             return
         types, args = [int, str], args.split(" ")
-        if args[0] != "BaseModel":
+        if args[0] not in self.major_class:
             print("** class doesn't exit **")
         else:
             error = ["** instance id missing **",
@@ -135,12 +149,14 @@ adding or updating attribute\n"""
                         check.remove(i)
                         args[3] = "".join(check)
             for key in new_storage.keys():
-                new_base = new_storage[key]
-                if args[1] == new_base.id:
-                    if args[2] not in ['id', 'created_at', 'updated_at']:
-                        setattr(new_base, args[2], args[3])
-                        new_base.save()
-                        return
+                 new_key = key.split(".")[0]
+                 if new_key == args[0]:
+                     new_base = new_storage[key]
+                     if args[1] == new_base.id:
+                         if args[2] not in ['id', 'created_at', 'updated_at']:
+                             setattr(new_base, args[2], args[3])
+                             new_base.save()
+                             return
             print("** no instance found **")
 
 
