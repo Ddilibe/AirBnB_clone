@@ -14,7 +14,7 @@ class User(BaseModel):
             @first_name: The first name of the user
             @last_name: The last name of the user
     """
-    email:str = ""
-    password:str = ""
-    first_name:str = ""
-    last_name:str = ""
+    email: str = ""
+    password: str = ""
+    first_name: str = ""
+    last_name: str = ""

@@ -2,6 +2,7 @@
 """
     Module or file used to run the console for the AirBnB_Clone
 """
+import re
 import cmd
 import sys
 from models.base_model import BaseModel
@@ -18,14 +19,15 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
     major_class = {
-            "BaseModel":BaseModel,
-            "User":User,
-            "Place":Place,
-            "State":State,
-            "City":City,
-            "Amenity":Amenity,
-            "Review":Review
+            "BaseModel": BaseModel,
+            "User": User,
+            "Place": Place,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Review": Review
             }
+    major_command = ['all', 'create', 'update', 'destroy', 'show', 'count']
 
     def emptyline(self):
         """
@@ -67,6 +69,11 @@ instance based in the class name and id\n"""
             if len(args) == 1:
                 print("** instance id missing **")
                 return
+            args[1] = list(args[1])
+            for i in args[1]:
+                if i in ('"', "'"):
+                    args[1].remove(i)
+            args[1] = ''.join(args[1])
             new_storage = storage.all()
             for key in new_storage.keys():
                 new_key = key.split(".")[0]
@@ -90,6 +97,11 @@ based on the class name and id\n"""
             if len(args) == 1:
                 print("** instance id missing **")
                 return
+            args[1] = list(args[1])
+            for i in args[1]:
+                if i in ('"', "'"):
+                    args[1].remove(i)
+            args[1] = ''.join(args[1])
             new_storage = storage.all()
             for key in new_storage.keys():
                 new_key = key.split(".")[0]
@@ -136,6 +148,12 @@ adding or updating attribute\n"""
             if len(args) < 4:
                 print(error[len(args)-1])
                 return
+            args[1] = list(args[1])
+            for i in args[1]:
+                if i in ('"', "'"):
+                    args[1].remove(i)
+            args[1].pop()
+            args[1] = ''.join(args[1])
             new_storage = storage.all()
             check = list(args[3])
             try:
@@ -143,21 +161,53 @@ adding or updating attribute\n"""
                     args[3] = float(args[3])
                 else:
                     args[3] = int(arg[3])
-            except:
-                for i in check:
-                    if i in ('"', "'"):
-                        check.remove(i)
-                        args[3] = "".join(check)
+            except Exception:
+                args[3].strip(", ")
             for key in new_storage.keys():
-                 new_key = key.split(".")[0]
-                 if new_key == args[0]:
-                     new_base = new_storage[key]
-                     if args[1] == new_base.id:
-                         if args[2] not in ['id', 'created_at', 'updated_at']:
-                             setattr(new_base, args[2], args[3])
-                             new_base.save()
-                             return
+                new_key = key.split(".")[0]
+                if new_key == args[0]:
+                    new_base = new_storage[key]
+                    if args[1] == new_base.id:
+                        if args[2] not in ['id', 'created_at', 'updated_at']:
+                            setattr(new_base, args[2], args[3])
+                            new_base.save()
+                            return
             print("** no instance found **")
+
+    def bracket(self, s: str) -> bool:
+        """Method for syntax confirmation """
+        pattern = r'[A-Za-z]+\.[a-z]+\(([*]{0,1}|[\w,\'\'+\.{}\s-])+\)'
+        if re.fullmatch(pattern, s) is None:
+            return False
+        return True
+
+    def precmd(self, line):
+        """The Hook method executed just the before the command \
+        is interpreted"""
+        if self.bracket(line):
+            first = line.split('.')
+            refe = first[1].split('(')
+            last = refe[1].split(')')
+            if first[0] in self.major_class and refe[0] in self.major_command:
+                line = refe[0] + ' ' + first[0] + ' ' + last[0]
+        return line
+
+    def do_count(self, args):
+        """Count command used to retrive the number of \
+instances of a class\n"""
+        if not args:
+            print("** class name missing **")
+            return
+        args = args.split(" ")
+        if args[0] not in self.major_class:
+            print("** class doesn't exit **")
+        else:
+            new_storage, count = storage.all(), 0
+            for key in new_storage.keys():
+                new_key = key.split(".")[0]
+                if new_key == args[0]:
+                    count += 1
+            print(count)
 
 
 if __name__ == '__main__':

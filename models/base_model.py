@@ -29,7 +29,7 @@ class BaseModel:
                     value = datetime.strptime(kwargs[key], form)
                 if key != "__class__":
                     setattr(self, key, value)
-        
+
     def __str__(self, name="BaseModel"):
         """ Public instance method to give a description of the class """
         name = self.__class__.__name__
@@ -47,7 +47,7 @@ class BaseModel:
         new_dictionary = {}
         name = self.__class__.__name__
         for key in self.__dict__.keys():
-            if type(self.__dict__[key]) == type(datetime.now()):
+            if isinstance(datetime.now(), self.__dict__[key]):
                 new_dictionary[key] = datetime.isoformat(getattr(self, key))
                 continue
             new_dictionary[key] = getattr(self, key)
