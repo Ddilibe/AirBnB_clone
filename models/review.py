@@ -13,6 +13,6 @@ class Review(BaseModel):
             @user_id: Id of the user giving the review
             @text: The details of the review from the user
     """
-    place_id:str = ""
-    user_id:str = ""
-    test:str = ""
+    place_id = ""
+    user_id = ""
+    test = ""

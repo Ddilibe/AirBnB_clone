@@ -11,4 +11,4 @@ class Amenity(BaseModel):
         Public class attributes:
             @name: The name of the last amenity
     """
-    name:str = ""
+    name = ""

@@ -47,7 +47,7 @@ class BaseModel:
         new_dictionary = {}
         name = self.__class__.__name__
         for key in self.__dict__.keys():
-            if isinstance(datetime.now(), self.__dict__[key]):
+            if isinstance(datetime.now(), type(self.__dict__[key])):
                 new_dictionary[key] = datetime.isoformat(getattr(self, key))
                 continue
             new_dictionary[key] = getattr(self, key)

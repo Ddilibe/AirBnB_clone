@@ -11,4 +11,4 @@ class State(BaseModel):
         Public class attributes:
             @name: Name of the state
     """
-    name:str = ""
+    name = ""
