@@ -4,6 +4,7 @@
 """
 import json
 
+
 class FileStorage:
     """
     Class That serializes instances to a JSON file and deserializes JSON
@@ -48,13 +49,13 @@ class FileStorage:
         from models.review import Review
 
         major_class = {
-                "User":User,
-                "BaseModel":BaseModel,
-                "Place":Place,
-                "State":State,
-                "City":City,
-                "Amenity":Amenity,
-                "Review":Review
+                "User": User,
+                "BaseModel": BaseModel,
+                "Place": Place,
+                "State": State,
+                "City": City,
+                "Amenity": Amenity,
+                "Review": Review
                 }
         try:
             with open(self.__file_path, 'r') as done:

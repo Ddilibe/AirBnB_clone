@@ -192,7 +192,7 @@ adding or updating attribute\n"""
                 if len(last[0].split(',')) > 1:
                     for i in last[0].split(','):
                         if type(i) not in [int, float]:
-                            if ':' in i:                              
+                            if ':' in i:
                                 i, r = i.split(':'), ''
                                 for w in i:
                                     w = w.strip('\'"')
@@ -227,4 +227,4 @@ instances of a class\n"""
 
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop() 
+    HBNBCommand().cmdloop()

@@ -7,6 +7,7 @@ from models.base_model import BaseModel
 from datetime import datetime
 from time import sleep
 
+
 class BaseModelTest(TestCase):
     """
         BaseModel class test created with the TestCase class
@@ -42,13 +43,15 @@ class BaseModelTest(TestCase):
         self.third.save()
 
     def test_time_difference(self):
-        """ Method to test that the time difference between the created at and the updated at is equal"""
+        """ Method to test that the time difference between\
+the created at and the updated at is equal"""
         self.assertEqual(self.first.updated_at, self.first.created_at)
         self.assertEqual(self.second.updated_at, self.second.created_at)
         self.assertEqual(self.third.updated_at, self.third.created_at)
 
     def test_after_save(self):
-        """ Method to test that the time difference between the created_at and the updated_at is not equal """
+        """ Method to test that the time difference \
+between the created_at and the updated_at is not equal """
         sleep(0.1)
         self.first.save()
         self.second.save()
@@ -67,22 +70,28 @@ class BaseModelTest(TestCase):
         """ Method to confirm the type of datetime attributes for first"""
         self.assertEqual(str, type(self.first.to_dict()['created_at']))
         self.assertEqual(str, type(self.first.to_dict()['updated_at']))
-        self.assertNotEqual(type(datetime.now), type(self.first.to_dict()['created_at']))
-        self.assertNotEqual(type(datetime.now), type(self.first.to_dict()['updated_at']))
+        self.assertNotEqual(type(datetime.now),
+                            type(self.first.to_dict()['created_at']))
+        self.assertNotEqual(type(datetime.now),
+                            type(self.first.to_dict()['updated_at']))
 
     def test_confirming_elements_in_the_datetime_for_second(self):
         """ Method to confirm the type of datetime attributes for second """
         self.assertEqual(str, type(self.second.to_dict()['created_at']))
         self.assertEqual(str, type(self.second.to_dict()['updated_at']))
-        self.assertNotEqual(type(datetime.now), type(self.second.to_dict()['created_at']))
-        self.assertNotEqual(type(datetime.now), type(self.second.to_dict()['updated_at']))
+        self.assertNotEqual(type(datetime.now),
+                            type(self.second.to_dict()['created_at']))
+        self.assertNotEqual(type(datetime.now),
+                            type(self.second.to_dict()['updated_at']))
 
     def test_confirming_elements_in_the_datetime_for_third(self):
         """ Method to confirm the type of datetime attributes for third """
         self.assertEqual(str, type(self.third.to_dict()['created_at']))
         self.assertEqual(str, type(self.third.to_dict()['updated_at']))
-        self.assertNotEqual(type(datetime.now), type(self.third.to_dict()['created_at']))
-        self.assertNotEqual(type(datetime.now), type(self.third.to_dict()['updated_at']))
+        self.assertNotEqual(type(datetime.now),
+                            type(self.third.to_dict()['created_at']))
+        self.assertNotEqual(type(datetime.now),
+                            type(self.third.to_dict()['updated_at']))
 
     def test_first_dictionary_attributes(self):
         """ Method to test the dictionary attributes of first """
@@ -113,15 +122,15 @@ class BaseModelTest(TestCase):
     def test_second_dictionary_added_attributes(self):
         """ Method to test the added attributes of a dictionary """
         self.second.age = [4, 3]
-        self.second.money = {33:45}
+        self.second.money = {3345}
         first = self.second.to_dict()
         self.assertEqual(list, type(first['age']))
         self.assertEqual(dict, type(first['money']))
 
     def test_third_dictionary_added_attributes(self):
         """ Method to test the added attributes of a dictionary """
-        self.third.age = (4,3)
-        self.third.money = {33,45}
+        self.third.age = (4, 3)
+        self.third.money = {33, 45}
         first = self.third.to_dict()
         self.assertEqual(tuple, type(first['age']))
         self.assertEqual(set, type(first['money']))
